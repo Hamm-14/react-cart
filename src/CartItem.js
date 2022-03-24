@@ -10,10 +10,10 @@ class CartItem extends React.Component {
             img: ''
         }
         // this.increaseQuantity = this.increaseQuantity.bind(this);
+        // this.testing();
     }
 
     increaseQuantity = () => {
-        console.log(this.state);
         //setState form 1 -> use this when prevstate not required
         // this.setState({
         //     qty: this.state.qty + 1
@@ -24,10 +24,34 @@ class CartItem extends React.Component {
             return{
                 qty: prevstate.qty + 1
             }
-        })
+        }, () => {
+            console.log('inside callback', this.state);
+        });
     }
 
+    // testing(){
+    //     var promise = new Promise((resolve,reject) => {
+    //         setTimeout(() => {
+    //             resolve('done');
+    //             console.log('from setTimeout',this.state);
+    //         },5000);
+    //     });
+
+    //     promise.then( () => {
+
+    //         this.setState({qty: this.state.qty + 10});
+    //         this.setState({qty: this.state.qty + 10});
+    //         this.setState({qty: this.state.qty + 10});
+            
+    //         console.log('inside promise',this.state);
+    //     });
+    // }
+
     decreaseQuantity = () => {
+        const {qty} = this.state;  //destructuring state
+        if(qty === 0){
+            return;
+        }
         this.setState((prevstate) => {
             return{
                 qty: prevstate.qty - 1
@@ -37,6 +61,7 @@ class CartItem extends React.Component {
 
     render(){
         const {price, qty, title, img} = this.state;
+        console.log('render');
         return (
             <div className='cart-item'>
                 <div className='left-block'>
