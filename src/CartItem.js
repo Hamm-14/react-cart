@@ -5,7 +5,7 @@ class CartItem extends React.Component {
         super();
         this.state = {
             price: '10,000',
-            qty: 2,
+            qty: 1,
             title: 'Phone',
             img: ''
         }
@@ -14,6 +14,25 @@ class CartItem extends React.Component {
 
     increaseQuantity = () => {
         console.log(this.state);
+        //setState form 1 -> use this when prevstate not required
+        // this.setState({
+        //     qty: this.state.qty + 1
+        // });
+
+        //setState form 2 -> use this when previous state is required
+        this.setState((prevstate) => {
+            return{
+                qty: prevstate.qty + 1
+            }
+        })
+    }
+
+    decreaseQuantity = () => {
+        this.setState((prevstate) => {
+            return{
+                qty: prevstate.qty - 1
+            }
+        })
     }
 
     render(){
