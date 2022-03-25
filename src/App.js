@@ -13,21 +13,21 @@ class App extends React.Component {
                 title: 'Mobile',
                 price: 10000,
                 qty: 2,
-                img: '',
+                img: 'https://images.unsplash.com/photo-1567581935884-3349723552ca?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=774&q=80',
                 id: 1
             },
             {
                 title: 'Watch',
                 price: 200,
                 qty: 3,
-                img: '',
+                img: 'https://images.unsplash.com/photo-1524805444758-089113d48a6d?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=388&q=80',
                 id: 2
             },
             {
                 title: 'Shoes',
                 price: 1200,
                 qty: 1,
-                img: '',
+                img: 'https://images.unsplash.com/photo-1542291026-7eec264c27ff?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80',
                 id: 3
             }
         ]
@@ -80,6 +80,18 @@ getProductCount = () => {
   return count;
 }
 
+getCartValue = () => {
+  const {products} = this.state;
+
+  let cartValue = 0;
+
+  products.map((product) => {
+    cartValue = cartValue + product.qty * product.price;
+  });
+
+  return cartValue;
+}
+
   render(){
     const {products} = this.state;
     return (
@@ -90,6 +102,8 @@ getProductCount = () => {
           onIncreaseQuantity={this.handlingIncreaseQuantity}
           onDecreaseQuantity={this.handlingDecreaseQuantity} 
           onDeleteProduct={this.handlingDeleteProduct}/>
+
+        <div style={{padding:10,fontSize: 20}}>TOTAL: {this.getCartValue()}</div>
       </div>
     );
   }
