@@ -56,27 +56,46 @@ componentDidMount() {
 }
 
 handlingIncreaseQuantity = (product) => {
-    // console.log('Hey Increasing quantity of', product);
     const {products} = this.state;
     const index = products.indexOf(product);
-    products[index].qty += 1;
 
-    this.setState({
-        products: products
-    });
+    // products[index].qty += 1;
+    // this.setState({
+    //   products: products
+    // });
+
+    const docRef = this.db.collection('products').doc(products[index].id);
+
+    docRef.update({qty: products[index].qty + 1})
+          .then( () => {
+            console.log('Updated Successfully');
+          })
+          .catch((err) => {
+            console.log('Error in increasing qty',err);
+          });
 }
 
 handlingDecreaseQuantity = (product) => {
-    // console.log('Hey decreasing quantity of', product);
     const {products} = this.state;
     const index = products.indexOf(product);
     if(products[index].qty === 0){
         return;
     }
-    products[index].qty -= 1;
-    this.setState({
-        products: products
-    });
+
+    // products[index].qty -= 1;
+    // this.setState({
+    //     products: products
+    // });
+
+    const docRef = this.db.collection('products').doc(products[index].id);
+
+    docRef.update({qty: products[index].qty - 1})
+          .then( () => {
+            console.log('Updated Successfully');
+          })
+          .catch((err) => {
+            console.log('Error in decreasing qty',err);
+          });
 }
 
 handlingDeleteProduct = (id) => {
