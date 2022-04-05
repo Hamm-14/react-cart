@@ -14,29 +14,45 @@ class App extends React.Component {
         products: [],
         loading: true
     }
+
+    this.db = firebase.firestore();
   }
 
 componentDidMount() {
-  firebase
-   .firestore()
-   .collection('products')      
-   .get()
-   .then( (snapshot) => {
-     console.log(snapshot);
-    //  snapshot.docs.map((doc) => {
-    //    console.log(doc.data());
-    //  });
-     const products = snapshot.docs.map((doc) => {
-       const data = doc.data();
-       data['id'] = doc.id;
-       return data;
-     });
+  // this.db
+  //  .collection('products')      
+  //  .get()
+  //  .then( (snapshot) => {
+  //    console.log(snapshot);
+  //   //  snapshot.docs.map((doc) => {
+  //   //    console.log(doc.data());
+  //   //  });
+  //    const products = snapshot.docs.map((doc) => {
+  //      const data = doc.data();
+  //      data['id'] = doc.id;
+  //      return data;
+  //    });
 
-     this.setState({
-       products: products,
-       loading: false
-     })
-   });
+  //    this.setState({
+  //      products: products,
+  //      loading: false
+  //    })
+  //  });
+
+  this.db
+      .collection('products')
+      .onSnapshot((snapshot) => {          //Attach a listener to query snapshot, will be called whenever something changes in our db
+           console.log(snapshot);
+           const products = snapshot.docs.map((doc) => {
+             const data = doc.data();
+             data['id'] = doc.id;
+             return data;
+           });
+           this.setState({
+             products: products,
+             loading: false
+           })
+         });
 }
 
 handlingIncreaseQuantity = (product) => {
